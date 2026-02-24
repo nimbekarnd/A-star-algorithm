@@ -286,7 +286,7 @@ class Astar(object):
     # animate path
     def animate(self, explored_states, backtrack_states, path, image_path=None):
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter(str(path), fourcc, 20.0, (self.numCols,self.numRows))
+        out = cv2.VideoWriter(str(path), fourcc, 100.0, (self.numCols,self.numRows))
         image = np.zeros((self.numRows, self.numCols, 3), dtype=np.uint8)
         count = 0
         for state in explored_states:
