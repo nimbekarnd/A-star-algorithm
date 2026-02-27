@@ -164,10 +164,10 @@ class Astar(object):
     def CheckIfGoal(self, currRow, currCol):
         check = (((currRow - self.goal[0]) * (currRow - self.goal[0])) + ((currCol - self.goal[1]) * (currCol - self.goal[1])) - ( 1.5 * 1.5))
         if(check <= 0):
-            global cat
-            global dog
-            cat = currRow
-            dog = currCol
+            global goalRow
+            global goalCol
+            goalRow = currRow
+            goalCol = currCol
             print("goal reached")
             return True
         else:
@@ -262,11 +262,11 @@ class Astar(object):
             return (explored_states, [], distMap[f1,f2,0])
 
         for a in range(0,360,30):
-            if(distMap[cat,dog,a] != ans):
+            if(distMap[goalRow,goalCol,a] != ans):
                 bird = a
 
-        print(distMap[cat,dog,bird],"answer")
-        result = (cat, dog, bird)
+        print(distMap[goalRow,goalCol,bird],"answer")
+        result = (goalRow, goalCol, bird)
         
         # backtrack path
         backtrack_states = []
@@ -277,17 +277,30 @@ class Astar(object):
         backtrack_states.append(self.start)
         backtrack_states = list(reversed(backtrack_states))
         # print(explored_states) 
-        return (explored_states, backtrack_states, distMap[cat,dog,bird])
+        return (explored_states, backtrack_states, distMap[goalRow,goalCol,bird])
     
-
-
-
 
     # animate path
     def animate(self, explored_states, backtrack_states, path, image_path=None):
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter(str(path), fourcc, 100.0, (self.numCols,self.numRows))
+        path = str(path)
+
+        # Create blank frame (height, width, channels)
         image = np.zeros((self.numRows, self.numCols, 3), dtype=np.uint8)
+        fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+        out = cv2.VideoWriter(str(path), fourcc, 20.0, (self.numCols,self.numRows))
+        image = np.zeros((self.numRows, self.numCols, 3), dtype=np.uint8)
+
+
+        # If MP4 failed (missing codecs), fall back to AVI
+        if not out.isOpened():
+            if not path.lower().endswith('.avi'):
+                path = path.rsplit('.', 1)[0] + '.avi'
+            fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            out = cv2.VideoWriter(path, fourcc, fps, (self.numCols, self.numRows))
+
+        if not out.isOpened():
+            raise RuntimeError("cv2.VideoWriter failed to open (MP4 and AVI). Install ffmpeg/gstreamer codecs or use XVID/MJPG.")
+
         count = 0
         for state in explored_states:
             image[int(self.numRows - state[0]), int(state[1] - 1)] = (255, 150, 0)
@@ -317,3 +330,5 @@ class Astar(object):
         cv2.waitKey(0)
         cv2.destroyAllWindows()
         out.release()
+
+        print("Saved video to:", path)

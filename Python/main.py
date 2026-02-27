@@ -1,7 +1,7 @@
 import os
 from astar_class import Astar
 
-OUTPUT_DIR   = os.path.join(os.path.dirname(__file__), "..", "output")
+OUTPUT_DIR   = os.path.join(os.path.dirname(__file__), "..", "Python/output")
 OUTPUT_FILE  = "astar_algoritm_in_python.avi"
 OUTPUT_IMAGE = "astar_python_path.png"
 
