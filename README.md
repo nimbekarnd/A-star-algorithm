@@ -77,7 +77,7 @@ Results are saved to the `output/` folder:
 
 Parameters used:
 
-![Parameters](Python/output/Parameter_for_python_test.png)
+![Parameters](Python/output/Parameters_for_python_test.png)
 
 Result:
 
@@ -159,5 +159,15 @@ Results are saved to the `output/` folder:
 |------|-------------|
 | `astar_algoritm_in_cpp.avi` | Animated video of exploration and path |
 | `astar_cpp_path.png` | Final frame showing the complete path |
+
+### Example
+
+Parameters used:
+
+![Parameters](CPP/output/Parameters_for_cpp_test.png)
+
+Result:
+
+![A* Path](CPP/output/astar_python_path.png)
 
 ---
