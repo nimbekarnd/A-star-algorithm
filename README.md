@@ -168,6 +168,6 @@ Parameters used:
 
 Result:
 
-![A* Path](CPP/output/astar_python_path.png)
+![A* Path](CPP/output/astar_cpp_path.png)
 
 ---
